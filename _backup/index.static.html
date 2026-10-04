@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MacNichol Landscaping Supplies — Salisbury, NB</title>
+<meta name="description" content="Mulch, soils, aggregates and milled hemlock lumber in Salisbury, New Brunswick — minutes from Moncton." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: 'var(--bg)', ink: 'var(--ink)', muted: 'var(--muted)', line: 'var(--line)',
+          card: 'var(--card)', accent: 'var(--accent)', forest: 'var(--forest)', lichen: 'var(--lichen)',
+        },
+        fontFamily: {
+          display: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  /* ===== 3-colour system: Hemlock green · Lichen · Heartwood amber ===== */
+  :root {
+    --green: #1F3B2C;
+    --lichen-base: #EEF1EA;
+    --amber: #C27B2E;
+
+    --bg: var(--lichen-base);
+    --ink: var(--green);
+    --muted: color-mix(in oklab, var(--green) 68%, var(--lichen-base));
+    --line: color-mix(in oklab, var(--green) 16%, var(--lichen-base));
+    --card: color-mix(in oklab, var(--lichen-base) 55%, #fff);
+    --accent: var(--amber);
+    --forest: var(--green);
+    --lichen: var(--lichen-base);
+    --hero: var(--green);
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12211A;
+      --ink: #E3E9DF;
+      --muted: color-mix(in oklab, #E3E9DF 66%, #12211A);
+      --line: color-mix(in oklab, #E3E9DF 14%, #12211A);
+      --card: color-mix(in oklab, #12211A 88%, #fff);
+      --accent: #D8944A;
+      --forest: #E3E9DF;
+      --lichen: #12211A;
+      --hero: #183024;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12211A;
+    --ink: #E3E9DF;
+    --muted: color-mix(in oklab, #E3E9DF 66%, #12211A);
+    --line: color-mix(in oklab, #E3E9DF 14%, #12211A);
+    --card: color-mix(in oklab, #12211A 88%, #fff);
+    --accent: #D8944A;
+    --forest: #E3E9DF;
+    --lichen: #12211A;
+    --hero: #183024;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px); }
+  body { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  *, *::before, *::after { box-sizing: border-box; }
+  img { max-width: 100%; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  .display { font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-variation-settings: "opsz" 96; letter-spacing: -0.035em; }
+
+  .site-header { top: env(safe-area-inset-top, 0px); }
+  .site-logo { filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+
+  /* ===== Hero ===== */
+  .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--hero); color: #EEF1EA; }
+  /* Photo layer: fit to width (not cover) so the 895px source isn't over-enlarged, anchored to the bottom */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -2;
+    background: url("assets/images/milling-timber-moncton.jpg") center bottom / cover no-repeat;
+    opacity: .35;
+  }
+  /* Shade: solid behind the headline, opening up toward the right so the mill shows through */
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(90deg, var(--hero) 0%, color-mix(in oklab, var(--hero) 75%, transparent) 45%, color-mix(in oklab, var(--hero) 25%, transparent) 100%);
+  }
+  @media (min-width: 1024px) {
+    /* Band at the photo's own aspect ratio, sitting in the upper-middle so it shows above the fold; edges feathered into the green */
+    .hero::before {
+      inset: 18% 0 auto 0; aspect-ratio: 895 / 333; opacity: .7;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 80%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 80%, transparent 100%);
+    }
+  }
+  .hero-sub { color: color-mix(in oklab, #EEF1EA 74%, var(--hero)); }
+
+  /* ===== Strata column (the signature element) ===== */
+  .strata { border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.55); }
+  .layer {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    width: 100%; padding: 0 1.25rem; text-align: left; cursor: pointer; border: 0;
+    transition: flex-grow .45s cubic-bezier(.2,.8,.2,1), filter .2s;
+  }
+  .layer:hover, .layer:focus-visible { flex-grow: 1.8; filter: brightness(1.06); outline-offset: -4px; }
+  .layer .tag { font-weight: 600; font-size: .95rem; }
+  .layer .price { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 1.05rem; white-space: nowrap; }
+  .layer .price small { font-weight: 500; font-size: .75rem; opacity: .8; }
+
+  .l-mulch {
+    flex: 1.3 1 0; color: #fff;
+    background-color: var(--amber);
+    background-image:
+      repeating-linear-gradient(28deg, rgba(255,255,255,.14) 0 3px, transparent 3px 19px),
+      repeating-linear-gradient(-34deg, rgba(31,59,44,.22) 0 2px, transparent 2px 23px),
+      repeating-linear-gradient(80deg, rgba(255,255,255,.08) 0 4px, transparent 4px 31px);
+  }
+  .l-top {
+    flex: 1.1 1 0; color: #EEF1EA;
+    background-color: color-mix(in oklab, var(--amber) 30%, var(--green));
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(0,0,0,.28) 0 1.5px, transparent 2px),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,.10) 0 1px, transparent 1.6px);
+    background-size: 9px 9px, 13px 11px;
+  }
+  .l-blend {
+    flex: 1 1 0; color: #EEF1EA;
+    background-color: color-mix(in oklab, var(--amber) 22%, color-mix(in oklab, var(--green) 85%, #000));
+    background-image:
+      repeating-linear-gradient(12deg, rgba(194,123,46,.28) 0 1px, transparent 1px 11px),
+      radial-gradient(circle, rgba(0,0,0,.3) 0 1.4px, transparent 2px);
+    background-size: auto, 10px 10px;
+  }
+  .l-sand {
+    flex: .9 1 0; color: var(--green);
+    background-color: color-mix(in oklab, var(--amber) 38%, #EEF1EA);
+    background-image:
+      radial-gradient(circle, rgba(31,59,44,.22) 0 .8px, transparent 1.2px),
+      radial-gradient(circle, rgba(255,255,255,.5) 0 .8px, transparent 1.2px);
+    background-size: 5px 5px, 7px 6px; background-position: 0 0, 2px 3px;
+  }
+  .l-dust {
+    flex: .8 1 0; color: var(--green);
+    background-color: color-mix(in oklab, var(--green) 22%, #EEF1EA);
+    background-image: radial-gradient(circle, rgba(31,59,44,.25) 0 1px, transparent 1.5px);
+    background-size: 6px 6px;
+  }
+  .l-gravel {
+    flex: 1.2 1 0; color: #EEF1EA;
+    background-color: color-mix(in oklab, var(--green) 62%, #EEF1EA);
+    background-image:
+      radial-gradient(ellipse 9px 7px at 30% 40%, rgba(238,241,234,.35) 0 60%, transparent 66%),
+      radial-gradient(ellipse 7px 6px at 75% 70%, rgba(31,59,44,.45) 0 60%, transparent 66%),
+      radial-gradient(ellipse 6px 5px at 60% 20%, rgba(238,241,234,.22) 0 60%, transparent 66%);
+    background-size: 26px 22px, 22px 26px, 18px 18px;
+  }
+  .l-drain {
+    flex: 1.2 1 0; color: #EEF1EA;
+    background-color: color-mix(in oklab, var(--green) 82%, #000);
+    background-image:
+      radial-gradient(ellipse 13px 10px at 35% 45%, rgba(238,241,234,.24) 0 60%, transparent 67%),
+      radial-gradient(ellipse 11px 9px at 80% 80%, rgba(194,123,46,.22) 0 60%, transparent 67%);
+    background-size: 34px 30px, 30px 34px;
+  }
+
+  /* one orchestrated entrance: layers settle in from top to bottom */
+  @media (prefers-reduced-motion: no-preference) {
+    .strata .layer { animation: settle .7s cubic-bezier(.2,.8,.2,1) both; }
+    .strata .layer:nth-child(1) { animation-delay: .05s; }
+    .strata .layer:nth-child(2) { animation-delay: .13s; }
+    .strata .layer:nth-child(3) { animation-delay: .21s; }
+    .strata .layer:nth-child(4) { animation-delay: .29s; }
+    .strata .layer:nth-child(5) { animation-delay: .37s; }
+    .strata .layer:nth-child(6) { animation-delay: .45s; }
+    .strata .layer:nth-child(7) { animation-delay: .53s; }
+    @keyframes settle { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .layer { transition: none; }
+  }
+
+  /* ===== Price tabs ===== */
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  .tab[aria-selected="false"] { color: var(--muted); }
+  .tab[aria-selected="false"]:hover { color: var(--ink); }
+  .row + .row { border-top: 1px solid var(--line); }
+
+  /* ===== Calculator ===== */
+  input[type="range"] { accent-color: var(--accent); width: 100%; }
+  .field { background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+  .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent); }
+
+
+  .status-dot { width: .55rem; height: .55rem; border-radius: 999px; display: inline-block; }
+
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover { filter: brightness(1.07); }
+  .btn-ghost-light { border: 1px solid color-mix(in oklab, #EEF1EA 35%, transparent); color: #EEF1EA; }
+  .btn-ghost-light:hover { background: color-mix(in oklab, #EEF1EA 10%, transparent); }
+
+  .chip { border: 1px solid var(--line); }
+  .wood-grain {
+    background-color: color-mix(in oklab, var(--amber) 85%, var(--green));
+    background-image:
+      repeating-radial-gradient(ellipse 120% 60% at 0% 50%, rgba(255,255,255,.10) 0 2px, transparent 2px 14px);
+  }
+</style>
+</head>
+<body class="font-sans">
+
+<!-- ================= HEADER ================= -->
+<header class="site-header sticky z-50 border-b border-line" style="background: color-mix(in oklab, var(--bg) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
+    <a href="#top" class="flex items-center gap-3" aria-label="MacNichol Landscaping Supplies home">
+      <img src="assets/images/logo.png" alt="MacNichol Landscaping Supplies" width="331" height="100" class="site-logo h-11 w-auto sm:h-12">
+    </a>
+
+    <nav class="hidden items-center gap-7 text-sm font-medium lg:flex" aria-label="Main">
+      <a href="#prices" class="text-muted hover:text-ink">Mulch &amp; soils</a>
+      <a href="#lumber" class="text-muted hover:text-ink">Hemlock lumber</a>
+      <a href="#made-here" class="text-muted hover:text-ink">Made in Salisbury</a>
+      <a href="#calculator" class="text-muted hover:text-ink">Calculator</a>
+      <a href="#visit" class="text-muted hover:text-ink">Visit</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="tel:+15063729417" class="btn-accent hidden rounded-full px-5 py-2.5 text-sm font-semibold sm:inline-flex">Call 506-372-9417</a>
+      <button id="menuBtn" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M3 6h14M3 14h14"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav id="mobileNav" class="hidden border-t border-line px-5 pb-5 pt-2 lg:hidden" aria-label="Mobile">
+    <a href="#prices" class="block border-b border-line py-3.5 font-medium">Mulch &amp; soils</a>
+    <a href="#lumber" class="block border-b border-line py-3.5 font-medium">Hemlock lumber</a>
+    <a href="#made-here" class="block border-b border-line py-3.5 font-medium">Made in Salisbury</a>
+    <a href="#calculator" class="block border-b border-line py-3.5 font-medium">Calculator</a>
+    <a href="#visit" class="block py-3.5 font-medium">Visit</a>
+    <a href="tel:+15063729417" class="btn-accent mt-3 flex justify-center rounded-full px-5 py-3 font-semibold">Call 506-372-9417</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="mx-auto grid max-w-7xl gap-12 px-5 pb-16 pt-14 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:pb-24 lg:pt-20">
+    <div class="flex flex-col justify-center lg:col-span-7">
+      <p id="openStatus" class="mb-6 inline-flex w-fit items-center gap-2 rounded-full px-3.5 py-1.5 text-sm" style="background: color-mix(in oklab, #EEF1EA 9%, transparent);">
+        <span class="status-dot" style="background:#9aa79f"></span><span>Checking hours…</span>
+      </p>
+      <h1 class="display text-[2.9rem] font-extrabold leading-[0.95] sm:text-6xl lg:text-[5.6rem]">
+        Everything your yard is built on.
+      </h1>
+      <p class="hero-sub mt-6 max-w-xl text-lg leading-relaxed">
+        Screened soils, stone, hemlock woodchips and lumber milled right here in Salisbury, New Brunswick. Minutes from Moncton, and small loads are welcome.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="#prices" class="btn-accent rounded-full px-6 py-3.5 font-semibold">See today's prices</a>
+        <a href="#calculator" class="btn-ghost-light rounded-full px-6 py-3.5 font-semibold">Work out how much you need</a>
+      </div>
+      <dl class="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t pt-6 text-sm" style="border-color: color-mix(in oklab, #EEF1EA 18%, transparent);">
+        <div><dt class="hero-sub">Pickup from</dt><dd class="display mt-1 text-2xl font-bold">$45<span class="text-sm font-medium">/yd³</span></dd></div>
+        <div><dt class="hero-sub">Milled in</dt><dd class="display mt-1 text-2xl font-bold">Salisbury</dd></div>
+        <div><dt class="hero-sub">Beams up to</dt><dd class="display mt-1 text-2xl font-bold">24 ft</dd></div>
+      </dl>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="strata flex h-[460px] flex-col sm:h-[520px]" role="list" aria-label="Materials, layered like the ground">
+        <button class="layer l-mulch" role="listitem" data-mat="mulch"><span class="tag">Hemlock woodchips</span><span class="price">$65 <small>/yd³</small></span></button>
+        <button class="layer l-top" role="listitem" data-mat="topsoil"><span class="tag">Screened top soil</span><span class="price">$45 <small>/yd³</small></span></button>
+        <button class="layer l-blend" role="listitem" data-mat="blended"><span class="tag">Blended soil</span><span class="price">$90 <small>/yd³</small></span></button>
+        <button class="layer l-sand" role="listitem" data-mat="sand"><span class="tag">Sand</span><span class="price">$90 <small>/yd³</small></span></button>
+        <button class="layer l-dust" role="listitem" data-mat="dust"><span class="tag">Crusher dust</span><span class="price">$65 <small>/yd³</small></span></button>
+        <button class="layer l-gravel" role="listitem" data-mat="gravel"><span class="tag">Crushed stone 0–¾″</span><span class="price">$65 <small>/yd³</small></span></button>
+        <button class="layer l-drain" role="listitem" data-mat="drain"><span class="tag">Drain stone ¼–¾″</span><span class="price">$65 <small>/yd³</small></span></button>
+      </div>
+      <p class="hero-sub mt-4 text-center text-sm">Tap a layer to price it in the calculator. Pickup prices, plus HST.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICES ================= -->
+<section id="prices" class="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+  <div class="grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <h2 class="display text-4xl font-bold leading-tight sm:text-5xl">Price list</h2>
+      <p class="mt-4 max-w-sm leading-relaxed text-muted">All prices are for pickup and don't include HST. Bring your truck or trailer; we'll load you up.</p>
+      <div class="mt-8 rounded-2xl border border-line bg-card p-5 text-sm leading-relaxed">
+        <p class="font-semibold">Quick sizing</p>
+        <p class="mt-1 text-muted">A full-size half-ton with an 8 ft box, filled level with the rails, holds about 2.5 cubic yards.</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-8">
+      <div class="flex w-full gap-1 overflow-x-auto rounded-full border border-line p-1 sm:w-fit" role="tablist" aria-label="Product categories">
+        <button class="tab shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold" role="tab" aria-selected="true" aria-controls="p-soil" id="t-soil">Soils &amp; aggregates</button>
+        <button class="tab shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold" role="tab" aria-selected="false" aria-controls="p-mulch" id="t-mulch">Mulch</button>
+        <button class="tab shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold" role="tab" aria-selected="false" aria-controls="p-wood" id="t-wood">Wood &amp; firewood</button>
+      </div>
+
+      <div class="mt-6 rounded-3xl border border-line bg-card px-5 sm:px-8">
+        <div id="p-soil" role="tabpanel" aria-labelledby="t-soil">
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Top soil</p><p class="mt-1 text-sm text-muted">Quality screened. We specialize in small quantities.</p></div><p class="display shrink-0 text-xl font-bold">$45<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Blended soil</p><p class="mt-1 text-sm text-muted">Two-thirds screened top soil, one-third composted horse manure. Ideal for new beds and gardens.</p></div><p class="display shrink-0 text-xl font-bold">$90<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Sand</p></div><p class="display shrink-0 text-xl font-bold">$90<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Crushed stone (gravel)</p><p class="mt-1 text-sm text-muted">0 to ¾ inch</p></div><p class="display shrink-0 text-xl font-bold">$65<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Drain stone</p><p class="mt-1 text-sm text-muted">¼ to ¾ inch</p></div><p class="display shrink-0 text-xl font-bold">$65<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Crusher dust (tailings)</p></div><p class="display shrink-0 text-xl font-bold">$65<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+        </div>
+
+        <div id="p-mulch" role="tabpanel" aria-labelledby="t-mulch" hidden>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Natural hemlock woodchips</p><p class="mt-1 text-sm text-muted">For gardens, pathways, flower beds and garden boxes. Hemlock is naturally rot-resistant, with no chemicals.</p></div><p class="display shrink-0 text-xl font-bold">$65<span class="text-sm font-medium text-muted"> /yd³</span></p></div>
+          <div class="row py-5 text-sm leading-relaxed">
+            <p class="font-semibold">Mulching tips</p>
+            <p class="mt-1 text-muted">Lay it 2 to 4 inches deep. Keep it a few inches back from tree trunks and shrubs; mulch piled against the bark invites decay, disease and pests.</p>
+          </div>
+        </div>
+
+        <div id="p-wood" role="tabpanel" aria-labelledby="t-wood" hidden>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Firewood</p><p class="mt-1 text-sm text-muted">Half cord</p></div><p class="display shrink-0 text-xl font-bold">$90</p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Firewood bundles</p><p class="mt-1 text-sm text-muted">$10 each, or 3 for $25</p></div><p class="display shrink-0 text-xl font-bold">$10</p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Slab wood bundle</p><p class="mt-1 text-sm text-muted">About 48″ × 36″ × 8 ft. Bring a trailer; bundles are wider than most truck boxes.</p></div><p class="display shrink-0 text-xl font-bold">$50</p></div>
+          <div class="row flex items-start justify-between gap-4 py-5"><div><p class="font-semibold">Sawdust</p><p class="mt-1 text-sm text-muted">Per tote bag</p></div><p class="display shrink-0 text-xl font-bold">$40</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CALCULATOR ================= -->
+<section id="calculator" class="border-y border-line bg-card">
+  <div class="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:py-28">
+    <div>
+      <h2 class="display text-4xl font-bold leading-tight sm:text-5xl">How much will you need?</h2>
+      <p class="mt-4 max-w-md leading-relaxed text-muted">Measure your bed or driveway, pick a depth, and we'll do the math. Length × width × depth, divided by 27, gives cubic yards.</p>
+
+      <div class="mt-10 space-y-6">
+        <label class="block">
+          <span class="text-sm font-semibold">Material</span>
+          <select id="cMat" class="field mt-2 w-full rounded-xl px-4 py-3.5 text-base">
+            <option value="mulch">Hemlock woodchips — $65/yd³</option>
+            <option value="topsoil">Top soil — $45/yd³</option>
+            <option value="blended">Blended soil — $90/yd³</option>
+            <option value="sand">Sand — $90/yd³</option>
+            <option value="gravel">Crushed stone 0–¾″ — $65/yd³</option>
+            <option value="drain">Drain stone ¼–¾″ — $65/yd³</option>
+            <option value="dust">Crusher dust — $65/yd³</option>
+          </select>
+        </label>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-sm font-semibold">Length (ft)</span>
+            <input id="cLen" type="number" inputmode="decimal" min="0" value="10" class="field mt-2 w-full rounded-xl px-4 py-3.5 text-base" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-semibold">Width (ft)</span>
+            <input id="cWid" type="number" inputmode="decimal" min="0" value="10" class="field mt-2 w-full rounded-xl px-4 py-3.5 text-base" />
+          </label>
+        </div>
+        <label class="block">
+          <span class="flex justify-between text-sm font-semibold"><span>Depth</span><span id="cDepthOut">3 in</span></span>
+          <input id="cDepth" type="range" min="1" max="12" step="1" value="3" class="mt-3" />
+        </label>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <div class="rounded-[28px] p-7 sm:p-10" style="background: var(--hero); color:#EEF1EA;">
+        <p class="hero-sub text-sm">You'll need about</p>
+        <p class="display mt-1 text-7xl font-extrabold leading-none sm:text-8xl"><span id="rYards">0.93</span><span class="ml-2 text-2xl font-semibold">yd³</span></p>
+        <div class="mt-8 grid grid-cols-2 gap-6 border-t pt-6" style="border-color: color-mix(in oklab, #EEF1EA 18%, transparent);">
+          <div><p class="hero-sub text-sm">Estimated cost</p><p class="display mt-1 text-3xl font-bold" id="rCost">$60.19</p><p class="hero-sub text-xs">plus HST, pickup</p></div>
+          <div><p class="hero-sub text-sm">Half-ton loads</p><p class="display mt-1 text-3xl font-bold" id="rLoads">1</p><p class="hero-sub text-xs">at ~2.5 yd³ each</p></div>
+        </div>
+        <a href="tel:+15063729417" class="btn-accent mt-8 flex justify-center rounded-full px-6 py-3.5 font-semibold">Call to confirm your order</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LUMBER ================= -->
+<section id="lumber" class="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+  <div class="grid gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <h2 class="display text-4xl font-bold leading-tight sm:text-5xl">Hemlock lumber, milled on site.</h2>
+      <p class="mt-5 leading-relaxed text-muted">We mill rough hemlock lumber and timber right here in Salisbury, including live edge boards on request. Our 24 ft timber is a favourite for building wooden bridges.</p>
+      <div class="mt-8 rounded-2xl p-5 text-sm leading-relaxed" style="background: color-mix(in oklab, var(--accent) 14%, var(--bg)); border:1px solid color-mix(in oklab, var(--accent) 35%, transparent);">
+        <p class="font-semibold">Building season fills up fast</p>
+        <p class="mt-1 text-muted">Milled lumber and timber needs to be ordered well in advance. Call us with your cut list.</p>
+      </div>
+      <a href="tel:+15063729417" class="btn-accent mt-8 inline-flex rounded-full px-6 py-3.5 font-semibold">Call for lumber pricing</a>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="rounded-3xl border border-line bg-card p-6 sm:p-8">
+        <p class="font-semibold">Rough hemlock sizes</p>
+        <p class="mt-1 text-sm text-muted">Call for pricing and stock.</p>
+        <div class="mt-6 space-y-5">
+          <div><p class="mb-2 text-sm text-muted">Boards</p><div class="flex flex-wrap gap-2 text-sm font-medium"><span class="chip rounded-full px-3.5 py-1.5">1×3</span><span class="chip rounded-full px-3.5 py-1.5">1×4</span><span class="chip rounded-full px-3.5 py-1.5">1×6</span><span class="chip rounded-full px-3.5 py-1.5">1×8</span><span class="chip rounded-full px-3.5 py-1.5">1×10</span><span class="chip rounded-full px-3.5 py-1.5">1×12</span></div></div>
+          <div><p class="mb-2 text-sm text-muted">Dimensional</p><div class="flex flex-wrap gap-2 text-sm font-medium"><span class="chip rounded-full px-3.5 py-1.5">2×4</span><span class="chip rounded-full px-3.5 py-1.5">2×6</span><span class="chip rounded-full px-3.5 py-1.5">2×8</span><span class="chip rounded-full px-3.5 py-1.5">2×10</span><span class="chip rounded-full px-3.5 py-1.5">2×12</span></div></div>
+          <div><p class="mb-2 text-sm text-muted">Posts &amp; timber</p><div class="flex flex-wrap gap-2 text-sm font-medium"><span class="chip rounded-full px-3.5 py-1.5">4×4</span><span class="chip rounded-full px-3.5 py-1.5">6×6</span><span class="chip rounded-full px-3.5 py-1.5">8×8</span><span class="chip rounded-full px-3.5 py-1.5">10×10 · call</span><span class="rounded-full px-3.5 py-1.5 text-white" style="background:var(--accent)">24 ft beams</span></div></div>
+        </div>
+      </div>
+
+      <ol class="mt-6 grid gap-4 sm:grid-cols-4" aria-label="How we mill">
+        <li class="rounded-2xl border border-line p-5"><span class="display text-3xl font-bold text-accent">1</span><p class="mt-3 text-sm font-semibold">Logs arrive</p><p class="mt-1 text-sm text-muted">We receive hemlock logs.</p></li>
+        <li class="rounded-2xl border border-line p-5"><span class="display text-3xl font-bold text-accent">2</span><p class="mt-3 text-sm font-semibold">To the mill</p><p class="mt-1 text-sm text-muted">Each log goes on the carriage.</p></li>
+        <li class="rounded-2xl border border-line p-5"><span class="display text-3xl font-bold text-accent">3</span><p class="mt-3 text-sm font-semibold">Careful cuts</p><p class="mt-1 text-sm text-muted">Milled to your sizes.</p></li>
+        <li class="rounded-2xl border border-line p-5"><span class="display text-3xl font-bold text-accent">4</span><p class="mt-3 text-sm font-semibold">Ready to build</p><p class="mt-1 text-sm text-muted">Rough lumber, picked up here.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MADE IN SALISBURY ================= -->
+<section id="made-here" class="border-t border-line">
+  <div class="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <h2 class="display max-w-xl text-4xl font-bold leading-tight sm:text-5xl">Made from our hemlock, in Salisbury.</h2>
+      <p class="max-w-sm text-muted">Built by hand from the same lumber we mill. Ask about custom sizes.</p>
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-6">
+      <!-- Feature: garden box -->
+      <article class="wood-grain relative overflow-hidden rounded-[28px] p-7 text-white sm:p-10 md:col-span-4 md:row-span-2">
+        <svg class="pointer-events-none absolute -bottom-6 -right-6 h-56 w-56 opacity-25 sm:h-72 sm:w-72" viewBox="0 0 200 200" aria-hidden="true">
+          <g fill="none" stroke="#fff" stroke-width="3"><rect x="20" y="70" width="160" height="60" rx="4"/><path d="M20 90h160M20 110h160M40 130v50M160 130v50"/><path d="M60 70c0-20 10-34 20-40M100 70c0-24 0-36 0-44M140 70c0-20-8-32-18-38"/></g>
+        </svg>
+        <p class="text-sm" style="color:rgba(255,255,255,.8)">Most popular</p>
+        <h3 class="display mt-2 text-3xl font-bold sm:text-4xl">Raised hemlock garden box</h3>
+        <p class="mt-4 max-w-md leading-relaxed" style="color:rgba(255,255,255,.88)">Waist-high planting with no kneeling or bending, and fewer weeds and pests. 3 ft × 6 ft, 32″ tall, with 12″ of soil depth.</p>
+        <p class="display mt-8 text-5xl font-extrabold">$250<span class="ml-2 text-base font-medium" style="color:rgba(255,255,255,.8)">each + HST</span></p>
+        <p class="mt-2 text-sm" style="color:rgba(255,255,255,.8)">Other sizes available on request.</p>
+      </article>
+
+      <article class="rounded-[22px] border border-line bg-card p-6 md:col-span-2">
+        <h3 class="display text-xl font-bold">Hemlock wooden stakes</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">Sharpened stakes for vines, driveway markers, snow and survey work.</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li class="flex justify-between gap-3"><span>Survey 1×2×30″ · 50</span><span class="font-semibold">$37.50</span></li>
+          <li class="flex justify-between gap-3"><span>Snow 1×2×48″ · 50</span><span class="font-semibold">$62.50</span></li>
+          <li class="flex justify-between gap-3"><span>Snow 1×2×60″ · 50</span><span class="font-semibold">$87.50</span></li>
+          <li class="flex justify-between gap-3"><span>Landscape 2×2×60″ · 25</span><span class="font-semibold">$56.25</span></li>
+        </ul>
+      </article>
+
+      <article class="rounded-[22px] border border-line bg-card p-6 md:col-span-2">
+        <h3 class="display text-xl font-bold">Custom laser-cut signs</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">Engraved hemlock signs for your business, cottage, camper or family name. Great for gifts and awards too.</p>
+        <a href="#visit" class="mt-4 inline-block text-sm font-semibold text-accent underline underline-offset-4">Ask about a sign</a>
+      </article>
+
+      <article class="rounded-[22px] border border-line bg-card p-6 md:col-span-3">
+        <h3 class="display text-xl font-bold">Hemlock rig mats</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">Heavy-duty, Canadian-made ground protection for cranes and wet job sites. Built from 6×6 rough hemlock and threaded rod, 5 ft × 6 ft.</p>
+        <p class="mt-4 text-sm font-semibold">Call for pricing and availability</p>
+      </article>
+
+      <article class="rounded-[22px] p-6 md:col-span-3" style="background: var(--hero); color:#EEF1EA;">
+        <h3 class="display text-xl font-bold">Rough lumber cabin for sale</h3>
+        <p class="hero-sub mt-2 text-sm leading-relaxed">A cabin built from our own rough hemlock. Give Randy a call for details and to arrange a look.</p>
+        <a href="tel:+15063729417" class="mt-4 inline-block text-sm font-semibold underline underline-offset-4" style="color:#E3A35E">Call about the cabin</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VISIT ================= -->
+<section id="visit" class="hero">
+  <div class="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:py-28">
+    <div>
+      <h2 class="display text-4xl font-bold leading-tight sm:text-6xl">Come load up.</h2>
+      <p class="hero-sub mt-5 max-w-md text-lg leading-relaxed">Serving Salisbury, Moncton, Riverview, Dieppe and the surrounding areas.</p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=2856+Route+106+Boundary+Creek+NB+E1G+4N4" target="_blank" rel="noopener" class="btn-accent rounded-full px-6 py-3.5 font-semibold">Get directions</a>
+        <a href="tel:+15063729417" class="btn-ghost-light rounded-full px-6 py-3.5 font-semibold">Call Randy</a>
+      </div>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="rounded-[22px] p-6" style="background: color-mix(in oklab, #EEF1EA 7%, transparent); border:1px solid color-mix(in oklab, #EEF1EA 14%, transparent);">
+        <p class="hero-sub text-sm">Address</p>
+        <p class="mt-2 font-semibold leading-relaxed">2856 Route 106<br>Boundary Creek, NB<br>E1G 4N4, Canada</p>
+      </div>
+      <div class="rounded-[22px] p-6" style="background: color-mix(in oklab, #EEF1EA 7%, transparent); border:1px solid color-mix(in oklab, #EEF1EA 14%, transparent);">
+        <p class="hero-sub text-sm">Phone</p>
+        <a href="tel:+15063729417" class="display mt-2 block text-2xl font-bold">506-372-9417</a>
+        <p class="hero-sub mt-1 text-sm">Randy MacNichol</p>
+      </div>
+      <div class="rounded-[22px] p-6 sm:col-span-2" style="background: color-mix(in oklab, #EEF1EA 7%, transparent); border:1px solid color-mix(in oklab, #EEF1EA 14%, transparent);">
+        <p class="hero-sub text-sm">Hours</p>
+        <ul class="mt-3 space-y-2" id="hoursList">
+          <li class="flex justify-between gap-4" data-days="1,2,3,4,5"><span>Monday – Friday</span><span class="font-semibold">8:00 AM – 4:30 PM</span></li>
+          <li class="flex justify-between gap-4" data-days="6"><span>Saturday</span><span class="font-semibold">8:00 AM – 11:00 AM</span></li>
+          <li class="flex justify-between gap-4" data-days="0"><span>Sunday</span><span class="font-semibold">Closed</span></li>
+        </ul>
+        <p class="hero-sub mt-4 text-sm">Closed on all holidays.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="border-t border-line">
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <p>© 2026 MacNichol Landscaping Supplies · Salisbury, New Brunswick</p>
+    <nav class="flex flex-wrap gap-5" aria-label="Footer">
+      <a href="#prices" class="hover:text-ink">Prices</a>
+      <a href="#lumber" class="hover:text-ink">Lumber</a>
+      <a href="#calculator" class="hover:text-ink">Calculator</a>
+      <a href="#visit" class="hover:text-ink">Visit</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---------- Mobile menu ---------- */
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('mobileNav');
+  const icon = document.getElementById('menuIcon');
+  function setMenu(open) {
+    nav.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    icon.setAttribute('d', open ? 'M5 5l10 10M15 5L5 15' : 'M3 6h14M3 14h14');
+  }
+  btn.addEventListener('click', () => setMenu(nav.classList.contains('hidden')));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('resize', () => { if (window.innerWidth >= 1024) setMenu(false); });
+
+  /* ---------- Tabs ---------- */
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  function selectTab(t) {
+    tabs.forEach(x => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(t));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        selectTab(n); n.focus();
+      }
+    });
+  });
+  selectTab(tabs[0]);
+
+  /* ---------- Calculator ---------- */
+  const PRICES = { mulch: 65, topsoil: 45, blended: 90, sand: 90, gravel: 65, drain: 65, dust: 65 };
+  const $ = id => document.getElementById(id);
+  const money = n => n.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
+  function calc() {
+    const L = Math.max(0, parseFloat($('cLen').value) || 0);
+    const W = Math.max(0, parseFloat($('cWid').value) || 0);
+    const D = parseFloat($('cDepth').value);
+    $('cDepthOut').textContent = D + ' in';
+    const yards = (L * W * (D / 12)) / 27;
+    $('rYards').textContent = yards.toFixed(2);
+    $('rCost').textContent = money(yards * PRICES[$('cMat').value]);
+    $('rLoads').textContent = yards === 0 ? '0' : String(Math.ceil(yards / 2.5));
+  }
+  ['cLen', 'cWid', 'cDepth', 'cMat'].forEach(id => $(id).addEventListener('input', calc));
+  calc();
+
+  /* Strata layers feed the calculator */
+  document.querySelectorAll('.layer').forEach(l => {
+    l.addEventListener('click', () => {
+      $('cMat').value = l.dataset.mat;
+      if (l.dataset.mat === 'mulch') $('cDepth').value = 3;
+      calc();
+      document.getElementById('calculator').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      setTimeout(() => $('cLen').focus({ preventScroll: true }), 500);
+    });
+  });
+
+  /* ---------- Live open/closed status (Atlantic time) ---------- */
+  function updateStatus() {
+    const el = document.getElementById('openStatus');
+    let day, mins;
+    try {
+      const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Moncton', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+      const get = t => parts.find(p => p.type === t).value;
+      day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(get('weekday'));
+      mins = parseInt(get('hour'), 10) * 60 + parseInt(get('minute'), 10);
+    } catch (e) { return; }
+    const close = day >= 1 && day <= 5 ? 16 * 60 + 30 : day === 6 ? 11 * 60 : null;
+    const isOpen = close !== null && mins >= 8 * 60 && mins < close;
+    const fmt = m => { const h = Math.floor(m / 60), mm = m % 60; return ((h + 11) % 12 + 1) + (mm ? ':' + String(mm).padStart(2, '0') : '') + (h < 12 ? ' AM' : ' PM'); };
+    let text;
+    if (isOpen) text = 'Open now · until ' + fmt(close);
+    else if (close !== null && mins < 8 * 60) text = 'Closed · opens today at 8 AM';
+    else text = 'Closed · opens ' + (day === 6 || day === 0 ? 'Monday' : 'tomorrow') + ' at 8 AM';
+    el.innerHTML = '<span class="status-dot" style="background:' + (isOpen ? '#7FD39A' : '#E3A35E') + '"></span><span></span>';
+    el.lastChild.textContent = text;
+    document.querySelectorAll('#hoursList li').forEach(li => {
+      const today = li.dataset.days.split(',').map(Number).includes(day);
+      li.style.color = today ? '#E3A35E' : '';
+    });
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+})();
+</script>
+</body>
+</html>
