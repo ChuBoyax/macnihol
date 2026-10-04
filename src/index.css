@@ -144,6 +144,20 @@ img { max-width: 100%; }
 .btn-ghost-light { border: 1px solid color-mix(in oklab, #EEF1EA 35%, transparent); color: #EEF1EA; backdrop-filter: blur(6px); transition: background .2s; }
 .btn-ghost-light:hover { background: color-mix(in oklab, #EEF1EA 10%, transparent); }
 
+/* Footer: giant outlined wordmark; outline fills with a wood-amber gradient on hover */
+.footer-wordmark {
+  font-size: clamp(4rem, 19vw, 17rem);
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in oklab, #EEF1EA 22%, transparent);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 55%, transparent), transparent 85%);
+  -webkit-background-clip: text; background-clip: text;
+  background-size: 100% 0%; background-repeat: no-repeat; background-position: bottom;
+  transition: background-size 1s cubic-bezier(.2,.8,.2,1);
+  margin-bottom: -0.12em;
+}
+.footer-wordmark:hover { background-size: 100% 100%; }
+
 /* Inline text link: accent colour, underline draws in on hover */
 .text-link {
   color: var(--accent); font-weight: 500;
