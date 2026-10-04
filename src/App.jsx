@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
 import { AnimatePresence, MotionConfig } from 'motion/react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollTopButton from './components/ScrollTopButton';
 import PageTransition from './components/PageTransition';
 import Home from './pages/Home';
 import DecorativeMulches from './pages/DecorativeMulches';
@@ -55,6 +56,7 @@ export default function App() {
           <AnimatedRoutes />
         </main>
         <Footer />
+        <ScrollTopButton />
       </MotionConfig>
     </BrowserRouter>
   );

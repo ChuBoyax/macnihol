@@ -1,17 +1,37 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { motion } from 'motion/react';
 import { PRODUCT_NAV, UTILITY_NAV } from '../data';
-import { EASE, EASE_OUT_EXPO } from './motion';
+import { Arrow, EASE, EASE_OUT_EXPO } from './motion';
 
 const row = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
 };
 
-/** Link with an amber underline that draws in on hover. */
-function FooterLink({ to, className = '', children }) {
+function useHomeScroll(to) {
+  const { pathname } = useLocation();
+  // Already on the homepage: Home just scrolls back up to the hero
+  return () => { if (to === '/' && pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); };
+}
+
+/** Big product row: label slides right and an amber arrow appears on hover. */
+function ProductLink({ to, children }) {
+  const onClick = useHomeScroll(to);
   return (
-    <Link to={to} className={`group relative inline-block py-1 transition-colors duration-300 hover:text-white ${className}`}>
+    <Link to={to} onClick={onClick} className="group flex items-center justify-between gap-4 border-b border-white/10 py-4 transition-colors duration-300 hover:border-accent">
+      <span className="display text-2xl font-bold text-[#EEF1EA] transition-transform duration-300 group-hover:translate-x-2 sm:text-[1.7rem]">{children}</span>
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#EEF1EA]/60 transition-all duration-300 group-hover:-rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-white" aria-hidden="true">
+        <Arrow />
+      </span>
+    </Link>
+  );
+}
+
+/** Small link with an amber underline that draws in on hover. */
+function FooterLink({ to, children }) {
+  const onClick = useHomeScroll(to);
+  return (
+    <Link to={to} onClick={onClick} className="group relative inline-block py-1 text-[#EEF1EA]/70 transition-colors duration-300 hover:text-white">
       {children}
       <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true" />
     </Link>
@@ -19,36 +39,32 @@ function FooterLink({ to, className = '', children }) {
 }
 
 export default function Footer() {
-  const toTop = () => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-
   return (
     <footer className="hero-bg relative isolate overflow-hidden">
-      {/* faint wood-grain rings in the corner */}
-      <svg aria-hidden="true" className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[34rem] w-[34rem] opacity-[0.07]" viewBox="0 0 200 200" fill="none" stroke="#EEF1EA">
-        {[95, 80, 66, 53, 41, 30, 20, 11, 4].map((r, i) => (
-          <circle key={r} cx={100 + i * 0.6} cy={100 - i * 0.4} r={r} strokeWidth={i % 3 === 0 ? 1.6 : 0.9} />
-        ))}
-      </svg>
-
-      {/* Links */}
+      {/* Logo + links */}
       <motion.div
-        className="mx-auto max-w-7xl px-5 pb-12 pt-16 sm:px-8 lg:pt-20"
+        className="mx-auto grid max-w-7xl gap-12 px-5 pb-14 pt-16 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:pt-20"
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.25 }}
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
       >
-        <motion.nav variants={row} aria-label="Products" className="flex flex-wrap gap-x-10 gap-y-3">
-          {PRODUCT_NAV.map(l => (
-            <FooterLink key={l.to} to={l.to} className="display text-xl font-bold lowercase text-[#EEF1EA] sm:text-2xl">{l.label}</FooterLink>
-          ))}
-        </motion.nav>
-        <motion.nav variants={row} aria-label="Footer" className="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-[#EEF1EA]/70">
-          {UTILITY_NAV.map(l => (
-            <FooterLink key={l.to} to={l.to}>
-              {l.to === '/contact' ? <>contact <span className="normal-case">MacNichol Landscaping Supplies</span></> : l.label.toLowerCase()}
-            </FooterLink>
-          ))}
+        <motion.div variants={row} className="lg:col-span-5">
+          <Link to="/" onClick={() => { if (window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="inline-block transition-transform duration-300 hover:-rotate-1 hover:scale-[1.03]" aria-label="MacNichol Landscaping Supplies home">
+            <img src="assets/images/logo.png" alt="MacNichol Landscaping Supplies" width="331" height="100" className="h-20 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,.45)] sm:h-24" />
+          </Link>
+          <div className="mt-8 h-px w-16 bg-accent" aria-hidden="true" />
+          <nav aria-label="Footer" className="mt-6 flex flex-wrap gap-x-7 gap-y-2">
+            {UTILITY_NAV.map(l => (
+              <FooterLink key={l.to} to={l.to}>
+                {l.to === '/contact' ? <>contact MacNichol Landscaping Supplies</> : l.label.toLowerCase()}
+              </FooterLink>
+            ))}
+          </nav>
+        </motion.div>
+
+        <motion.nav variants={row} aria-label="Products" className="border-t border-white/10 lg:col-span-7">
+          {PRODUCT_NAV.map(l => <ProductLink key={l.to} to={l.to}>{l.label.toLowerCase()}</ProductLink>)}
         </motion.nav>
       </motion.div>
 
@@ -67,17 +83,14 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-5 py-6 text-sm text-[#EEF1EA]/60 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-5 py-6 pr-24 text-sm text-[#EEF1EA]/60 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:pr-28">
           <p>© 2026 MacNichol Landscaping Supplies</p>
-          <p>Site Design by CreativeDevLabs</p>
-          <button
-            type="button"
-            onClick={toTop}
-            className="group inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 font-medium text-[#EEF1EA]/80 transition-colors hover:border-accent hover:text-white"
-          >
-            Back to top
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:-translate-y-0.5" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" /></svg>
-          </button>
+          <p>
+            Site Design by{' '}
+            <a href="https://creativedevlabs.com/" target="_blank" rel="noopener" className="font-medium text-[#EEF1EA]/80 underline decoration-white/25 underline-offset-4 transition-colors hover:text-[#E3A35E] hover:decoration-[#E3A35E]">
+              CreativeDevLabs
+            </a>
+          </p>
         </div>
       </div>
     </footer>

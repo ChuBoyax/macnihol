@@ -55,6 +55,9 @@ export default function Header() {
   }, []);
 
   const pill = hovered ?? pathname;
+  // Already on the homepage: Home links just take you back up to the hero
+  const onLogoClick = () => { if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const onNavClick = to => () => { if (to === '/') onLogoClick(); };
 
   return (
     <>
@@ -67,7 +70,7 @@ export default function Header() {
         className={`site-header header-glass sticky z-50 border-b transition-[background-color,box-shadow] duration-500 ${scrolled ? 'is-scrolled' : ''}`}
       >
         <div className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 transition-[padding] duration-500 sm:px-8 ${scrolled ? 'py-2' : 'py-3'}`}>
-          <Link to="/" className="flex shrink-0 items-center" aria-label="MacNichol Landscaping Supplies home">
+          <Link to="/" onClick={onLogoClick} className="flex shrink-0 items-center" aria-label="MacNichol Landscaping Supplies home">
             <Logo scrolled={scrolled} />
           </Link>
 
@@ -76,6 +79,7 @@ export default function Header() {
               <NavLink
                 key={n.to}
                 to={n.to}
+                onClick={onNavClick(n.to)}
                 end
                 onPointerEnter={() => setHovered(n.to)}
                 className={({ isActive }) => `relative isolate whitespace-nowrap rounded-full px-3.5 py-2 transition-colors duration-300 ${pill === n.to || isActive ? 'text-ink' : 'text-muted'}`}
@@ -136,6 +140,7 @@ export default function Header() {
                     <NavLink
                       to={n.to}
                       end
+                      onClick={onNavClick(n.to)}
                       className={({ isActive }) => `block py-3.5 font-medium ${isActive ? 'text-accent' : ''} ${i < NAV.length - 1 ? 'border-b border-line' : ''}`}
                     >
                       {n.label}
