@@ -136,7 +136,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-5 py-6 text-sm text-[#EEF1EA]/60 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© 2026 MacNichol Landscaping Supplies</p>
-          <p>Site Design by Thorlynn Design Group Inc.</p>
+          <p>Site Design by CreativeDevLabs</p>
           <button
             type="button"
             onClick={toTop}
